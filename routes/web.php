@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
-Route::get('manifestations', function () {
-    return view('manifestations');
+Route::get('manifestation', function () {
+    return view('manifestation');
 });
 Route::get('configuration', function () {
-    return view('configuration');
+    return view('configurations');
 });
 Route::get('help', function () {
     return view('help');
