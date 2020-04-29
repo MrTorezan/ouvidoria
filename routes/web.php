@@ -22,6 +22,9 @@ Route::get('manifestation', function () {
 Route::get('configuration', function () {
     return view('configurations');
 });
+
+Route::get('department', 'DepartmentController@index');
+
 Route::get('help', function () {
     return view('help');
 });
