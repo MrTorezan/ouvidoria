@@ -13,18 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-Route::get('manifestation', function () {
-    return view('manifestation');
-});
-Route::get('configuration', function () {
-    return view('configurations');
-});
+Route::get('/', function () {return view('index');});
+Route::get('/manifestation', function () {return view('manifestation');});
+Route::get('/configuration', function () {return view('configurations');});
 
-Route::get('department', 'DepartmentController@index');
-
-Route::get('help', function () {
-    return view('help');
-});
+Route::resource('department', 'DepartmentController');
+Route::get('/help', function () {return view('help');});

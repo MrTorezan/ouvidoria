@@ -9,7 +9,7 @@
     <div class="card-body">
       <h5 class="card-title"><i class="fas fa-address-card"></i>
         Setores</h5>
-      <a href="{{url('department')}}" class="btn btn-primary">Gerenciar Setores</a>
+      <a href="{{route('department.index')}}" class="btn btn-primary">Gerenciar Setores</a>
     </div>
   </div>
   <!-- end card-config-->

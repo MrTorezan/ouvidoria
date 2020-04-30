@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\DepartmentModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class DepartmentController extends Controller
 {
+
+    private $departmentObj;
+
+    public function __construct()
+    {
+        $this->departmentObj = new DepartmentModel();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +24,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-       $departments = DB::table('departments')->get();
-       
-       return view('department', compact('departments'));
+        $departments = DB::table('departments')->get();
+        //dd($this->departmentObj->all());
+
+        return view('department', compact('departments'));
     }
 
     /**
@@ -37,7 +48,16 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->departmentObj->name = $request->input('name');
+        $this->departmentObj->responsible = $request->input('responsible');
+        $this->departmentObj->email_responsible = $request->input('email_responsible');
+        $this->departmentObj->manager = $request->input('manager');
+        $this->departmentObj->email_manager = $request->input('email_manager');
+
+        $this->departmentObj->save();
+        // dd($this->departmentObj);
+        return redirect('department')->with('success', 'Data Saved');
     }
 
     /**
