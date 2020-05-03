@@ -2,21 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-
-class DepartmentController extends Controller
+class FollowUpController extends Controller
 {
-
-    private $departmentObj;
-
-    public function __construct()
-    {
-        $this->departmentObj =  new Department();
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -24,10 +13,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = DB::table('departments')->get();
-        //dd($this->departmentObj->all());
-
-        return view('department', compact('departments'));
+        //
     }
 
     /**
@@ -48,16 +34,7 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-
-        $this->departmentObj->name = $request->input('name');
-        $this->departmentObj->responsible = $request->input('responsible');
-        $this->departmentObj->email_responsible = $request->input('email_responsible');
-        $this->departmentObj->manager = $request->input('manager');
-        $this->departmentObj->email_manager = $request->input('email_manager');
-
-        $this->departmentObj->save();
-        // dd($this->departmentObj);
-        return redirect('department')->with('success', 'Data Saved');
+        //
     }
 
     /**
@@ -89,15 +66,9 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         //
-        
-        $department = Department::findOrFail($request->idsetor);
-        $department->update($request->all());
-        
-        return back();
-        
     }
 
     /**
@@ -106,11 +77,8 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-            //
-       $department = Department::findOrFail($request->idsetor);
-       $department->delete();
-       return back();
+        //
     }
 }

@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\Manifestation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
-class DepartmentController extends Controller
+class ManifestationController extends Controller
 {
+    private $manifestationObj;
 
-    private $departmentObj;
-
-    public function __construct()
-    {
-        $this->departmentObj =  new Department();
+    public function __construct(){
+        $manifestationObj = new Manifestation;
     }
+
 
     /**
      * Display a listing of the resource.
@@ -24,10 +22,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        $manifestations = DB::table('manifestations')->get();
         $departments = DB::table('departments')->get();
-        //dd($this->departmentObj->all());
-
-        return view('department', compact('departments'));
+        $origins = DB::table('origins')->get();
+        return view('manifestation', compact('manifestations', 'departments', 'origins'));
     }
 
     /**
@@ -48,18 +46,22 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
+        $this->manifestationObj->manifestation_date = $request->input('manifestation_date');
+        $this->manifestationObj->complainer = $request->input('complainer');
+        $this->manifestationObj->complainer_phone = $request->input('complainer_phone');
+        $this->manifestationObj->complainer_email = $request->input('complainer_email');
+        $this->manifestationObj->id_user = 0;
+        $this->manifestationObj->id_department = $request->input('id_department');
+   
+       
+        $this->manifestationObj->save();
 
-        $this->departmentObj->name = $request->input('name');
-        $this->departmentObj->responsible = $request->input('responsible');
-        $this->departmentObj->email_responsible = $request->input('email_responsible');
-        $this->departmentObj->manager = $request->input('manager');
-        $this->departmentObj->email_manager = $request->input('email_manager');
+        return back();
 
-        $this->departmentObj->save();
-        // dd($this->departmentObj);
-        return redirect('department')->with('success', 'Data Saved');
+
     }
 
+   
     /**
      * Display the specified resource.
      *
@@ -80,6 +82,7 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         //
+        echo $id;
     }
 
     /**
@@ -89,15 +92,9 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         //
-        
-        $department = Department::findOrFail($request->idsetor);
-        $department->update($request->all());
-        
-        return back();
-        
     }
 
     /**
@@ -106,11 +103,8 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-            //
-       $department = Department::findOrFail($request->idsetor);
-       $department->delete();
-       return back();
+        //
     }
 }

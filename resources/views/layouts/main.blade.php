@@ -28,5 +28,60 @@
         </footer>
     <script src="{{asset('js/jquery.js')}}"></script>
     <script src="{{asset('js/bootstrap.js')}}"></script>
+    <script>
+        $('#editSetores').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var idsetor = button.data('idsetor');
+            var name = button.data('name');
+            var responsible = button.data('responsible');
+            var responsible_m = button.data('responsible_m');
+            var manager = button.data('manager');
+            var manager_m = button.data('manager_m');
+            var modal = $(this)
+           
+            modal.find(".modal-body #idsetor").val(idsetor);
+            modal.find(".modal-body #name").val(name);
+            modal.find(".modal-body #responsible").val(responsible);
+            modal.find(".modal-body #responsible_m").val(responsible_m);
+            modal.find(".modal-body #manager").val(manager);
+            modal.find(".modal-body #manager_m").val(manager_m);
+            modal.find(".modal-body #modal").val(modal);
+        });
+
+        $('#deleteSetores').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var idsetor = button.data('idsetor');
+            var modal = $(this)
+           
+            modal.find(".modal-body #idsetor").val(idsetor);
+
+        });
+
+        $('#editOrigins').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var idorigin = button.data('idorigin');
+            var name = button.data('name');
+            var description = button.data('description');
+            var modal = $(this)
+           
+            modal.find(".modal-body #idorigin").val(idorigin);
+            modal.find(".modal-body #name").val(name);
+            modal.find(".modal-body #description").val(description);
+
+            modal.find(".modal-body #modal").val(modal);
+        });
+
+        $('#deleteOrigins').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var idorigin = button.data('idorigin');
+            console.log(idorigin);
+            var modal = $(this)
+           
+            modal.find(".modal-body #idorigin").val(idorigin);
+            modal.find(".modal-body #modal").val(modal);
+
+        });
+
+    </script>
     </body>
 </html>

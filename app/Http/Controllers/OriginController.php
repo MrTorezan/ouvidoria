@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\Origin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
-class DepartmentController extends Controller
+class OriginController extends Controller
 {
 
-    private $departmentObj;
-
-    public function __construct()
-    {
-        $this->departmentObj =  new Department();
-    }
+    private $originObj;
 
     /**
      * Display a listing of the resource.
@@ -24,10 +18,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = DB::table('departments')->get();
-        //dd($this->departmentObj->all());
-
-        return view('department', compact('departments'));
+        //
+        $origins = DB::table('origins')->get();
+        return view('origins', compact('origins'));
     }
 
     /**
@@ -48,16 +41,16 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
+        //
 
-        $this->departmentObj->name = $request->input('name');
-        $this->departmentObj->responsible = $request->input('responsible');
-        $this->departmentObj->email_responsible = $request->input('email_responsible');
-        $this->departmentObj->manager = $request->input('manager');
-        $this->departmentObj->email_manager = $request->input('email_manager');
+        $this->originObj = new Origin();
+        $this->originObj->name = $request->input('name');
+        $this->originObj->description = $request->input('description');
 
-        $this->departmentObj->save();
-        // dd($this->departmentObj);
-        return redirect('department')->with('success', 'Data Saved');
+        $this->originObj->save();
+
+        return back();
+
     }
 
     /**
@@ -92,12 +85,10 @@ class DepartmentController extends Controller
     public function update(Request $request)
     {
         //
-        
-        $department = Department::findOrFail($request->idsetor);
-        $department->update($request->all());
-        
+        $originObj = Origin::findOrFail($request->idorigin);
+        $originObj->update($request->all());
+
         return back();
-        
     }
 
     /**
@@ -108,9 +99,8 @@ class DepartmentController extends Controller
      */
     public function destroy(Request $request)
     {
-            //
-       $department = Department::findOrFail($request->idsetor);
-       $department->delete();
+        $origin = Origin::findOrFail($request->idorigin);
+        $origin->delete();
        return back();
     }
 }

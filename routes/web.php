@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {return view('index');});
-Route::get('/manifestation', function () {return view('manifestation');});
 Route::get('/configuration', function () {return view('configurations');});
+Route::get('manifestation/email', 'ManifestationController@storeAndSendEmail')->name('manifestation.storeAndSendEmail');
 
 Route::resource('department', 'DepartmentController');
+Route::resource('manifestation', 'ManifestationController');
+Route::resource('origin', 'OriginController');
+
 Route::get('/help', function () {return view('help');});

@@ -8,61 +8,60 @@
     <div class="card-body">
         <div class="m-2 d-flex justify-content-between">
             <h5 class="card-title">Manifestações</h5>
-            <button class="btn btn-success"><i class="fas fa-plus"></i> Adicionar</button>
+            <button class="btn btn-success" data-toggle="modal" data-target="#cadManifestation"><i class="fas fa-plus"></i> Adicionar</button>
         </div>
-        <table class="table .table-bordered">
+
+        @if(!is_null($manifestations) && count($manifestations)>0)
+        <table class="table .table-striped">
             <thead>
               <tr>
                 <th scope="col">Data/Hora</th>
                 <th scope="col">Manifestante</th>
                 <th scope="col">Setor</th>
                 <th scope="col">Gerência</th>
-                <th>Editar</th>
-                <th>Visualizar</th>
+                <th class="text-center">Visualizar</th>
               </tr>
             </thead>
             <tbody>
+              @foreach ($manifestations as $manifestation)
               <tr>
-                <th scope="row">01/01/2020 8:00</th>
-                <td>João da Silva</td>
-                <td>Pronto Socorro</td>
-                <td>Laís</td>
-                <td><i class="fas fa-edit text-primary"></i></td>
-                <td><i class="fas fa-eye text-success"></i></td>
+              <th scope="row">{{$manifestation->id}}</th>
+                <td>{{$manifestation->complainer}}</td>
+                <td>{{$manifestation->id_department}}</td>
+                <td>{{$manifestation->id_user}}</td>
+                <td class="text-center"><a href="{{route('manifestation.edit', '1')}}" class="btn btn-info">Detalhes <i class="fas fa-angle-double-right"></i></a> </td>
               </tr>
-              <tr>
-                <th scope="row">01/01/2020 8:00</th>
-                <td>João da Silva</td>
-                <td>Pronto Socorro</td>
-                <td>Laís</td>
-                <td><i class="fas fa-edit text-primary"></i></td>
-                <td><i class="fas fa-eye text-success"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">01/01/2020 8:00</th>
-                <td>João da Silva</td>
-                <td>Pronto Socorro</td>
-                <td>Laís</td>
-                <td><i class="fas fa-edit text-primary"></i></td>
-                <td><i class="fas fa-eye text-success"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">01/01/2020 8:00</th>
-                <td>João da Silva</td>
-                <td>Pronto Socorro</td>
-                <td>Laís</td>
-                <td><i class="fas fa-edit text-primary"></i></td>
-                <td><i class="fas fa-eye text-success"></i></td>
-              </tr>
-              <tr>
-                <th scope="row">01/01/2020 8:00</th>
-                <td>João da Silva</td>
-                <td>Pronto Socorro</td>
-                <td>Laís</td>
-                <td><i class="fas fa-edit text-primary"></i></td>
-                <td><i class="fas fa-eye text-success"></i></td>
-              </tr>
+              @endforeach
             </tbody>
           </table>
+          @else
+            <h5>Não existem manifestações cadastradas.</h5>
+          @endif
+          
     </div>
+
+<!-- Modal -->
+<div class="modal fade" id="cadManifestation" tabindex="-1" role="dialog" aria-labelledby="cadManifestationLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cadManifestation">Nova Manifestação</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{route('manifestation.store')}}" method="POST">
+        @csrf
+      <div class="modal-body">
+        @include('layouts.form-manifestation')
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+
 @endsection
