@@ -16,14 +16,14 @@ class CreateManifestationsTable extends Migration
     {
         Schema::create('manifestations', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['suggestion', 'compliment', 'report', 'complaint', 'solicitation']);
-            $table->date('manifestation_date')->default(DB::raw('CURDATE()'));
+            $table->integer('type_id');
+            $table->date('manifestation_date');
             $table->string('complainer');
             $table->string('complainer_phone');
             $table->string('complainer_email');
             $table->text('description');
-            $table->integer('id_user');
-            $table->integer('id_department');
+            $table->integer('user_id');
+            $table->integer('department_id');
             $table->timestamps();
         });
     }

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Manifestation;
+use App\Models\Origin;
+use App\Models\Type;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,7 +14,8 @@ class ManifestationController extends Controller
 {
     private $manifestationObj;
 
-    public function __construct(){
+    public function __construct()
+    {
         $manifestationObj = new Manifestation;
     }
 
@@ -22,10 +27,12 @@ class ManifestationController extends Controller
      */
     public function index()
     {
-        $manifestations = DB::table('manifestations')->get();
-        $departments = DB::table('departments')->get();
-        $origins = DB::table('origins')->get();
-        return view('manifestation', compact('manifestations', 'departments', 'origins'));
+        $manifestations = Manifestation::all();
+        $origins = Origin::all();
+        $types = Type::all();
+        $departments = Department::all();
+
+        return view('manifestation', compact('manifestations', 'origins', 'types', 'departments'));
     }
 
     /**
@@ -46,22 +53,22 @@ class ManifestationController extends Controller
      */
     public function store(Request $request)
     {
-        $this->manifestationObj->manifestation_date = $request->input('manifestation_date');
-        $this->manifestationObj->complainer = $request->input('complainer');
-        $this->manifestationObj->complainer_phone = $request->input('complainer_phone');
-        $this->manifestationObj->complainer_email = $request->input('complainer_email');
-        $this->manifestationObj->id_user = 0;
-        $this->manifestationObj->id_department = $request->input('id_department');
-   
-       
-        $this->manifestationObj->save();
+        $manifestationObj = new Manifestation();
+
+        $manifestationObj->type_id = $request->input('id_type');
+        $manifestationObj->manifestation_date = Carbon::parse($request->input('manifestation_date'));
+        $manifestationObj->complainer = $request->input('complainer');
+        $manifestationObj->complainer_phone = $request->input('complainer_phone');
+        $manifestationObj->complainer_email = $request->input('complainer_email');
+        $manifestationObj->description = $request->input('description');
+        $manifestationObj->user_id = 0;
+        $manifestationObj->department_id = $request->input('id_department');
+
+        $manifestationObj->save();
 
         return back();
-
-
     }
 
-   
     /**
      * Display the specified resource.
      *
@@ -82,7 +89,12 @@ class ManifestationController extends Controller
     public function edit($id)
     {
         //
-        echo $id;
+        $manifestation = Manifestation::findOrFail($id);
+
+        $types = Type::all();
+        $departments = Department::all();
+        $origins = Origin::all();
+        return view('manifestation-detail', compact('manifestation', 'origins', 'types', 'departments'));
     }
 
     /**

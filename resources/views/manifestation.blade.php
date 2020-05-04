@@ -4,6 +4,7 @@
 <!--end title-->
 
 @section('content')
+
 <div class="card">
     <div class="card-body">
         <div class="m-2 d-flex justify-content-between">
@@ -25,11 +26,11 @@
             <tbody>
               @foreach ($manifestations as $manifestation)
               <tr>
-              <th scope="row">{{$manifestation->id}}</th>
+                <th scope="row">{{date('d/m/Y',strtotime($manifestation->manifestation_date))}}</th>
                 <td>{{$manifestation->complainer}}</td>
-                <td>{{$manifestation->id_department}}</td>
-                <td>{{$manifestation->id_user}}</td>
-                <td class="text-center"><a href="{{route('manifestation.edit', '1')}}" class="btn btn-info">Detalhes <i class="fas fa-angle-double-right"></i></a> </td>
+                <td>{{$manifestation->department->name}}</td>
+                <td>{{$manifestation->department->manager}}</td>
+                <td class="text-center"><a href="{{route('manifestation.edit', $manifestation->id)}}" class="btn btn-info">Detalhes <i class="fas fa-angle-double-right"></i></a> </td>
               </tr>
               @endforeach
             </tbody>
