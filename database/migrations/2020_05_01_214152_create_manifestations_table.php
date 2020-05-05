@@ -22,6 +22,7 @@ class CreateManifestationsTable extends Migration
             $table->string('complainer_phone');
             $table->string('complainer_email');
             $table->text('description');
+            $table->integer('origin_id');
             $table->integer('user_id');
             $table->integer('department_id');
             $table->timestamps();

@@ -24,7 +24,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = DB::table('departments')->get();
+        $departments = Department::all();
         //dd($this->departmentObj->all());
 
         return view('department', compact('departments'));
@@ -56,7 +56,6 @@ class DepartmentController extends Controller
         $this->departmentObj->email_manager = $request->input('email_manager');
 
         $this->departmentObj->save();
-        // dd($this->departmentObj);
         return redirect('department')->with('success', 'Data Saved');
     }
 

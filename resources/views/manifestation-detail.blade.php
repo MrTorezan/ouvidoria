@@ -10,20 +10,24 @@
             <label for="type_id">Tipo de Manifestação</label>
             <select name="type_id" id="type_id" class="form-control">
               @foreach ($types as $type)
-            <option value="{{$type->id}}" {{$manifestation->id}}>{{$type->name}}</option>
+            <option value="{{$type->id}}" {{($manifestation->type_id===$type->id)? 'selected':''}}>{{$type->name}}</option>
               @endforeach
             </select>
           </div>
           <div class="form-group col-3">
             <label for="id_department">Setor</label>
             <select name="id_department" id="id_department" class="form-control">
-              <option value="">Selecione</option>
+              @foreach ($departments as $department)
+            <option value="{{$department->id}}" {{($manifestation->department_id===$department->id)? 'selected':''}}>{{$department->name}}</option>
+              @endforeach
             </select>
           </div>
           <div class="form-group col-3">
             <label for="name">Origem</label>
             <select name="origin" id="origin" class="form-control">
-              <option value="">Selecione</option>
+              @foreach ($origins as $origin)
+            <option value="{{$origin->id}}" {{($manifestation->origin_id===$origin->id)? 'selected':''}}>{{$origin->name}}</option>
+              @endforeach
             </select>
           </div>
           <div class="form-group col-3">
