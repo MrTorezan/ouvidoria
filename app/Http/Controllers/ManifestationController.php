@@ -58,12 +58,12 @@ class ManifestationController extends Controller
         $manifestationObj->type_id = $request->input('type_id');
         $manifestationObj->manifestation_date = Carbon::parse($request->input('manifestation_date'));
         $manifestationObj->complainer = $request->input('complainer');
+        $manifestationObj->origin_id = $request->input('origin_id');
         $manifestationObj->complainer_phone = $request->input('complainer_phone');
         $manifestationObj->complainer_email = $request->input('complainer_email');
         $manifestationObj->description = $request->input('description');
-        $manifestationObj->description = $request->input('origin_id');
         $manifestationObj->user_id = 0;
-        $manifestationObj->department_id = $request->input('id_department');
+        $manifestationObj->department_id = $request->input('department_id');
 
         $manifestationObj->save();
 
