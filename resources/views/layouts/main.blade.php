@@ -81,6 +81,16 @@
             modal.find(".modal-body #modal").val(modal);
 
         });
+        
+        $('#deleteFollowUps').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var idfollowup = button.data('idfollowup');
+            var modal = $(this)
+           
+            modal.find(".modal-body #idfollowup").val(idfollowup);
+            modal.find(".modal-body #modal").val(modal);
+
+        });
 
     </script>
     </body>

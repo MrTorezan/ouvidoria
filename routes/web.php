@@ -20,5 +20,6 @@ Route::get('manifestation/email', 'ManifestationController@storeAndSendEmail')->
 Route::resource('department', 'DepartmentController');
 Route::resource('manifestation', 'ManifestationController');
 Route::resource('origin', 'OriginController');
+Route::resource('followup', 'FollowUpController');
 
 Route::get('/help', function () {return view('help');});

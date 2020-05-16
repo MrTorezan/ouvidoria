@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FollowUp;
 use Illuminate\Http\Request;
 
 class FollowUpController extends Controller
 {
+
+    public $followUp;
+
+    public function __construct()
+    {
+        $followUp = new FollowUp();        
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +43,15 @@ class FollowUpController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $manifestationObj->type_id = $request->input('type_id');
+
+        $followUp = new FollowUp();
+        $followUp ->description = $request->input('description');
+        $followUp ->user_id = '01';
+
+        $followUp->save();
+
+        return back();
     }
 
     /**

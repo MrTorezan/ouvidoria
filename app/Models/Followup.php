@@ -1,10 +1,9 @@
 <?php
 
-namespace App;
-
+namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
-class followup extends Model
+class FollowUp extends Model
 {
     //
     protected $table = 'followups';

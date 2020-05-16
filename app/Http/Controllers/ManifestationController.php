@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\FollowUp;
 use App\Models\Manifestation;
 use App\Models\Origin;
 use App\Models\Type;
@@ -95,7 +96,8 @@ class ManifestationController extends Controller
         $types = Type::all();
         $departments = Department::all();
         $origins = Origin::all();
-        return view('manifestation-detail', compact('manifestation', 'origins', 'types', 'departments'));
+        $followups = FollowUp::all()->sortByDesc('id');
+        return view('manifestation-detail', compact('manifestation', 'origins', 'types', 'departments', 'followups'));
     }
 
     /**

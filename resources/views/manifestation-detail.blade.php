@@ -4,6 +4,7 @@
 <!--end title-->
 
 @section('content')
+  <div class="mb-5">
     <form action="">
         <div class="row">
             <div class="form-group col-3">
@@ -25,7 +26,7 @@
           <div class="form-group col-3">
             <label for="name">Origem</label>
             <select name="origin" id="origin" class="form-control">
-              @foreach ($origins as $origin)
+              @foreach ($followups as $origin)
             <option value="{{$origin->id}}" {{($manifestation->origin_id===$origin->id)? 'selected':''}}>{{$origin->name}}</option>
               @endforeach
             </select>
@@ -59,37 +60,27 @@
         <i class="fas fa-plus"></i> Novo Acompanhamento
       </button>
     </div>
-    <div class="card bg-light mb-3">
-      <div class="card-header d-flex justify-content-between">
-        <div>Data: 01/01/2020</div>
-        <div>Usuário</div>
-      </div>
-      <div class="card-body">
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      </div>
-    </div>
-    <div class="card bg-light mb-3">
-      <div class="card-header d-flex justify-content-between">
-        <div>Data: 01/01/2020</div>
-        <div>Usuário</div>
-      </div>
-      <div class="card-body">
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      </div>
-    </div>
-    <div class="card bg-light mb-3">
-      <div class="card-header d-flex justify-content-between">
-        <div>Data: 01/01/2020</div>
-        <div>Usuário</div>
-      </div>
-      <div class="card-body">
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      </div>
-    </div>
-    
-    
+    @if (!is_null($followups) && count($followups)>0)
+      @foreach ($followups as $followup)
+        <div class="card bg-light mb-3">
+          <div class="card-header d-flex justify-content-between">
+          <div>Data: {{date('d/m/Y',strtotime($followup->created_at))}}</div>
+          <div>{{$followup->user_id}}</div>
+        </div>
+        <div class="card-body">
+          <p class="card-text">{{$followup->description}}</p>
+        </div>
+        <div class="card-footer text-right">
+          <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteFollowUps" data-idfollowup="{{$followup->id}}">Excluir</button>
+        </div>
+        </div>
+      @endforeach
+      @else
+      <h5>Não existem acompanhamentos para esta manifestação.</h5>
+    @endif
+  </div>
 
-    <!-- Modal -->
+<!-- Modal -->
 <div class="modal fade" id="followup" tabindex="-1" role="dialog" aria-labelledby="followupLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
@@ -99,7 +90,8 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="" method="POST">
+    <form action="{{route('followup.store')}}" method="POST">
+        @method('POST')
         @csrf
       <div class="modal-body">
         @include('layouts.form-manifestation-followup')
@@ -109,6 +101,35 @@
         <button type="submit" class="btn btn-primary">Salvar</button>
       </div>
     </div>
+  </form>
+</div>
+
+{{--init modal delete--}}
+<div class="modal fade" id="deleteFollowUps" tabindex="-1" role="dialog" aria-labelledby="deleteFollowUpsLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteFollowUpsLabel">Excluir Acompanhamento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <form action="{{route('followup.destroy', '1')}}" method="POST">
+      @method('DELETE')
+      @csrf
+        <div class="modal-body">
+          <input type="hidden" name="idfollowup" id="idfollowup" value="">
+          <h5>Deseja excluir este Acompanhamento?</h5>
+        </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-success" data-dismiss="modal">NÃO! Cancele!</button>
+      <button type="submit" class="btn btn-danger">SIM, pode excluir</button>
+      </div>
     </form>
+    </div>
   </div>
+</div>
+{{--end modal delete --}}
+
 @endsection
+
